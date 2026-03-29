@@ -1,0 +1,29 @@
+Artificial Intelligence and Machine Learning Overview
+
+Artificial Intelligence (AI) is the simulation of human intelligence processes by machines, especially computer systems. These processes include learning, reasoning, and self-correction.
+
+Machine Learning (ML) is a subset of AI that allows systems to learn and improve from experience without being explicitly programmed. ML algorithms build mathematical models based on sample data, known as "training data", in order to make predictions or decisions.
+
+Types of Machine Learning:
+1. Supervised Learning: Uses labeled training data to learn input-output patterns
+2. Unsupervised Learning: Finds hidden patterns in unlabeled data
+3. Reinforcement Learning: Learns through trial and error with rewards and penalties
+
+Deep Learning is a subset of ML using neural networks with many layers. It has revolutionized fields like computer vision, natural language processing, and speech recognition.
+
+Natural Language Processing (NLP) enables computers to understand human language. Applications include chatbots, translation, sentiment analysis, and summarization.
+
+Large Language Models (LLMs) like GPT-4, Claude, and LLaMA have shown remarkable capabilities in understanding and generating human-like text.
+
+Retrieval-Augmented Generation (RAG) combines retrieval systems with Large Language Models (LLMs). It retrieves relevant documents from a knowledge base before generating answers, reducing hallucinations and improving factual accuracy.
+
+FAISS (Facebook AI Similarity Search) is a library for efficient similarity search and clustering of dense vectors, commonly used in RAG systems for fast document retrieval.
+
+Sentence Transformers are models that convert text into numerical embeddings, allowing semantic similarity comparison between documents and queries.
+
+Key Applications:
+- Chatbots and virtual assistants
+- Document analysis and summarization
+- Question-answering systems
+- Content recommendation
+- Research and information retrieval
