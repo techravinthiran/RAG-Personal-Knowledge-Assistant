@@ -61,6 +61,9 @@ def load_rag_pipeline(file_paths: tuple):
         chunk_size=800, chunk_overlap=150
     ).split_documents(all_docs)
 
+    if not chunks:
+        return None, 0
+
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
         model_kwargs={"device": "cpu"},
@@ -165,24 +168,19 @@ with st.sidebar:
                 else:
                     st.error("Failed to index documents.")
 
-    st.divider()
-
-    st.subheader("Settings")
+    # Auto-configure Groq as default LLM
     try:
         from config import GROQ_API_KEY
+        if GROQ_API_KEY:
+            os.environ["GROQ_API_KEY"] = GROQ_API_KEY
+            model_choice = "Groq (LLaMA3)"
+        else:
+            model_choice = "HuggingFace (Flan-T5)"
     except ImportError:
-        GROQ_API_KEY = None
-        st.warning("config.py not found. Please create it for API key.")
-
-    model_choice = st.selectbox(
-        "LLM Backend",
-        ["HuggingFace (Flan-T5)", "Groq (LLaMA3)"],
-    )
-    # Auto-configure Groq API key when selected
-    if model_choice == "Groq (LLaMA3)" and GROQ_API_KEY:
-        os.environ["GROQ_API_KEY"] = GROQ_API_KEY
-
-    top_k = st.slider("Top-K Retrieval", 1, 8, 4)
+        model_choice = "HuggingFace (Flan-T5)"
+    
+    # Set default top_k
+    top_k = 4
 
     st.divider()
 
@@ -192,16 +190,6 @@ with st.sidebar:
     col2.metric("Chunks", st.session_state.chunk_count)
     col1.metric("Queries", st.session_state.total_queries)
     col2.metric("In Dataset", len(list(DATASET_DIR.glob("*"))))
-
-    st.divider()
-
-    st.subheader("Dataset Folder")
-    db_files = list(DATASET_DIR.glob("*"))
-    if db_files:
-        for f in db_files:
-            st.text(f"{f.name}  ({f.stat().st_size / 1024:.1f} KB)")
-    else:
-        st.caption("No files uploaded yet.")
 
     st.divider()
 
